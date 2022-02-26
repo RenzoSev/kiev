@@ -1,1 +1,1 @@
-export { default as scrapRouter } from './scrap';
+export { default as news } from './news';
