@@ -6,7 +6,8 @@
   "author": "Renzo Sevilha <sevilharenzo@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --watch 'src/' --exec 'ts-node src/app.ts' -e ts"
+    "dev-api": "nodemon --watch 'src/' --exec 'ts-node api/src/app.ts' -e ts",
+    "dev-cron": "nodemon --watch 'src/' --exec 'ts-node cron/src/index.ts' -e ts"
   },
   "dependencies": {
     "@types/express": "^4.17.13",
