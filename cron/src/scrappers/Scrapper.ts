@@ -2,61 +2,36 @@ import puppeteer from 'puppeteer';
 import { New } from '../types/New';
 
 export default abstract class Scrapper {
+  scrapper: string;
   url: string;
   abstract run(): void;
-  abstract parseFolhaData(): New[];
+  abstract parseElements(elements: Element[]): New[];
 
-  constructor(url: string) {
+  constructor(url: string, scrapper: string) {
     this.url = url;
+    this.scrapper = scrapper;
   }
 
-  public async getPageData() {
-    const browser = await puppeteer.launch({ headless: false });
+  public async getPageData(selectorElement: string) {
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.setViewport({ width: 1600, height: 1000 });
+
     await page.goto(this.url);
-    await page.screenshot({ path: 'page-image-full.png', fullPage: true });
 
-    const pageInformation = await page.evaluate(() => {
-      const containers = document.querySelector(
-        '.c-headline.c-headline--newslist'
-      );
+    const body = await page.$('body');
+    const data = await body?.$$eval(selectorElement, this.parseElements);
 
-      console.log('CONTAINERS', containers);
+    if (!data) throw `ERROR: error trying parse ${this.scrapper} DATA`;
 
-      const pageData = [] as New[];
+    await page.close();
+    await browser.close();
 
-      // for (const container of containers) {
-      //   const title =
-      //     container.querySelector('.c-headline__title')?.textContent;
-      //   const srcImage =
-      //     container.querySelector('.c-headline__image')?.textContent;
-      //   const date = container.querySelector(
-      //     '.c-headline__dateline'
-      //   )?.textContent;
-
-      //   if (!title || !srcImage || !date) {
-      //     throw 'ERROR TRYING TO PARSE FOLHA DATA';
-      //   }
-
-      //   pageData.push({
-      //     title,
-      //     srcImage,
-      //     date,
-      //   });
-      // }
-
-      return pageData;
-    });
-
-    // await page.close();
-    // await browser.close();
-
-    return pageInformation;
+    return data;
   }
 
   public async sendPageDataToDB(pageData: New[]) {
     console.log(pageData);
+    // WORKING IN PROGRESS
     return;
   }
 }

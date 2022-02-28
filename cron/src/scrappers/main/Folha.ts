@@ -1,43 +1,47 @@
-import { New } from '../../types/New';
 import Scrapper from '../Scrapper';
+import { New } from '../../types/New';
 
 export default class Folha extends Scrapper {
   constructor() {
-    super('https://search.folha.uol.com.br/?q=Ucrania&site=todos');
+    const url = 'https://search.folha.uol.com.br/?q=Ucrania&site=todos';
+    const scrapper = 'FOLHA';
+
+    super(url, scrapper);
   }
 
   async run() {
     try {
       console.log('Starting FOLHA Scrapper');
-      const pageData = await this.getPageData();
+
+      const selectorElement = '.c-headline.c-headline--newslist';
+      const pageData = await this.getPageData(selectorElement);
       await this.sendPageDataToDB(pageData);
+
       console.log('Finished FOLHA Scrapper');
     } catch (e) {
       console.error(e);
     }
   }
 
-  parseFolhaData(): New[] {
-    console.log('AAAAAAAAAAAAAA');
-
-    const containers = document.querySelectorAll(
-      '.c-headline.c-headline--newslist'
-    );
-
-    console.log('CONTAINERS', containers);
-
+  parseElements(elements: Element[]): New[] {
     const pageData = [] as New[];
 
-    for (const container of containers) {
-      const title = container.querySelector('.c-headline__title')?.textContent;
-      const srcImage =
-        container.querySelector('.c-headline__image')?.textContent;
-      const date = container.querySelector(
-        '.c-headline__dateline'
-      )?.textContent;
+    for (const element of elements) {
+      const title = element
+        .querySelector('.c-headline__title')
+        ?.textContent?.trim();
+      const srcImage = element
+        .querySelector('.c-headline__image')
+        ?.getAttribute('src');
+      const date = element
+        .querySelector('.c-headline__dateline')
+        ?.textContent?.trim();
 
       if (!title || !srcImage || !date) {
-        throw 'ERROR TRYING TO PARSE FOLHA DATA';
+        console.error(
+          `There is an parser error with TITLE: ${title}, SRC: ${srcImage}, DATE: ${date}`
+        );
+        continue;
       }
 
       pageData.push({
