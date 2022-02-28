@@ -17,9 +17,7 @@ export default abstract class Scrapper {
     const page = await browser.newPage();
 
     await page.goto(this.url);
-
-    const body = await page.$('body');
-    const data = await body?.$$eval(selectorElement, this.parseElements);
+    const data = await page.$$eval(selectorElement, this.parseElements);
 
     if (!data) throw `ERROR: error trying parse ${this.scrapper} DATA`;
 
