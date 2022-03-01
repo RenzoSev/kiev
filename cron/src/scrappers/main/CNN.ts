@@ -4,10 +4,11 @@ import Scrapper from '../Scrapper';
 import { New, NewData } from '../../types/New';
 import { Date, getFullDate, getFullTime } from '../../utils/date';
 
-export default class G1 extends Scrapper {
+export default class CNN extends Scrapper {
   constructor() {
-    const url = 'https://g1.globo.com/tudo-sobre/ucrania/';
-    const scrapper = 'G1';
+    const url =
+      'https://www.cnnbrasil.com.br/?s=ucrania&orderby=date&order=desc';
+    const scrapper = 'CNN';
 
     super(url, scrapper);
   }

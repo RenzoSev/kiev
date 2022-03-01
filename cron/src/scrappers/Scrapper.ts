@@ -1,18 +1,20 @@
 import puppeteer from 'puppeteer';
 import { New, NewData } from '../types/New';
+import { Date } from '../utils/date';
 
 export default abstract class Scrapper {
   scrapper: string;
   url: string;
-  abstract run(): void;
+  abstract run(): Promise<void>;
   abstract parseElements(elements: Element[]): NewData[];
+  abstract parseDate(date: string): Date;
 
   constructor(url: string, scrapper: string) {
     this.url = url;
     this.scrapper = scrapper;
   }
 
-  public async getPageData(selectorElement: string) {
+  public async getPageData(selectorElement: string): Promise<NewData[]> {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
@@ -28,7 +30,7 @@ export default abstract class Scrapper {
     return data;
   }
 
-  public async sendPageDataToDB(pageData: New[]) {
+  public async sendPageDataToDB(pageData: New[]): Promise<void> {
     console.log(pageData);
     // WORKING IN PROGRESS
     return;

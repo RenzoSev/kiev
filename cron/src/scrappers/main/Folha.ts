@@ -1,6 +1,6 @@
 import Scrapper from '../Scrapper';
-import { NewData } from '../../types/New';
-import { months, parseHours, parseMonth } from '../../utils/date';
+import { New, NewData } from '../../types/New';
+import { Date, months, parseHours, parseMonth } from '../../utils/date';
 
 export default class Folha extends Scrapper {
   constructor() {
@@ -10,7 +10,7 @@ export default class Folha extends Scrapper {
     super(url, scrapper);
   }
 
-  async run() {
+  async run(): Promise<void> {
     try {
       console.log(`Starting ${this.scrapper} Scrapper`);
 
@@ -55,7 +55,7 @@ export default class Folha extends Scrapper {
     return pageData;
   }
 
-  parsePageData(pageData: NewData[]) {
+  parsePageData(pageData: NewData[]): New[] {
     return pageData.map((data) => {
       const baseData = {
         title: data.title,
@@ -73,7 +73,7 @@ export default class Folha extends Scrapper {
     });
   }
 
-  parseDate(date: string) {
+  parseDate(date: string): Date {
     // example: 28.fev.2022 às 11h48
     const [fullDate, _, time] = date.split(' ');
 
