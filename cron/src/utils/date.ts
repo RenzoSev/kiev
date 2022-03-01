@@ -1,14 +1,3 @@
-export interface Date {
-  date: string;
-  time: {
-    hours: {
-      value: number;
-      period: string;
-    };
-    minutes: number;
-  };
-}
-
 export const months = {
   jan: 1,
   fev: 2,

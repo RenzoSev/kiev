@@ -1,8 +1,7 @@
-// const elements = document.querySelectorAll(".bastian-page > ._evg > ._evt")
-
+import Date from '../../../../kiev-utils/types/Date';
 import Scrapper from '../Scrapper';
 import { New, NewData } from '../../../../kiev-utils/types/New';
-import { Date, getFullDate, getFullTime } from '../../utils/date';
+import { getFullDate, getFullTime } from '../../utils/date';
 
 export default class G1 extends Scrapper {
   constructor() {

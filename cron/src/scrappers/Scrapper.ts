@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
-import { New, NewData } from '../../../kiev-utils/types/New';
-import { Date } from '../utils/date';
+import KievNew from '../../../kiev-utils/database/model/KievNew';
+import { HierarchyNew, New, NewData } from '../../../kiev-utils/types/New';
+import Date from '../../../kiev-utils/types/Date';
 
 export default abstract class Scrapper {
   scrapper: string;
@@ -31,8 +32,29 @@ export default abstract class Scrapper {
   }
 
   public async sendPageDataToDB(pageData: New[]): Promise<void> {
-    console.log(pageData);
-    // WORKING IN PROGRESS
-    return;
+    try {
+      const pageDataWithMainNew = this.getHierarchyNew(pageData);
+      console.log('PAGE DATA', pageData);
+      console.log('PAGE DATA WITH MAIN NEW', pageDataWithMainNew);
+      await KievNew.insertMany(pageDataWithMainNew);
+    } catch (e) {
+      console.error();
+    }
+  }
+
+  private getHierarchyNew(pageData: New[]): HierarchyNew[] {
+    return pageData.map((data, index) => {
+      if (index === 0) {
+        return {
+          ...data,
+          hierarchy: 'main',
+        };
+      }
+
+      return {
+        ...data,
+        hierarchy: 'normal',
+      };
+    });
   }
 }

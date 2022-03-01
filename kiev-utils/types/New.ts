@@ -1,5 +1,5 @@
-import { Date } from '../../cron/src/utils/date';
-
+import Date from './Date';
+import Hierarchy from './Hierarchy';
 export interface New {
   title: string;
   srcImage: string;
@@ -10,4 +10,8 @@ export interface NewData {
   title: string;
   srcImage: string;
   date?: string;
+}
+
+export interface HierarchyNew extends New {
+  hierarchy: Hierarchy;
 }
