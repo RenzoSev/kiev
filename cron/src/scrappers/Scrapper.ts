@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { New, NewData } from '../types/New';
+import { New, NewData } from '../../../kiev-utils/types/New';
 import { Date } from '../utils/date';
 
 export default abstract class Scrapper {

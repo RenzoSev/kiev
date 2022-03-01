@@ -1,4 +1,4 @@
-import { Date } from '../utils/date';
+import { Date } from '../../cron/src/utils/date';
 
 export interface New {
   title: string;

@@ -1,7 +1,7 @@
 // const elements = document.querySelectorAll(".bastian-page > ._evg > ._evt")
 
 import Scrapper from '../Scrapper';
-import { New, NewData } from '../../types/New';
+import { New, NewData } from '../../../../kiev-utils/types/New';
 import { Date, parseHours } from '../../utils/date';
 
 export default class CNN extends Scrapper {

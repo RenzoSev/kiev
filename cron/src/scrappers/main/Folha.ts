@@ -1,5 +1,5 @@
 import Scrapper from '../Scrapper';
-import { New, NewData } from '../../types/New';
+import { New, NewData } from '../../../../kiev-utils/types/New';
 import { Date, months, parseHours, parseMonth } from '../../utils/date';
 
 export default class Folha extends Scrapper {
