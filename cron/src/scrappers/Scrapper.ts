@@ -1,11 +1,11 @@
 import puppeteer from 'puppeteer';
-import { New } from '../types/New';
+import { New, NewData } from '../types/New';
 
 export default abstract class Scrapper {
   scrapper: string;
   url: string;
   abstract run(): void;
-  abstract parseElements(elements: Element[]): New[];
+  abstract parseElements(elements: Element[]): NewData[];
 
   constructor(url: string, scrapper: string) {
     this.url = url;
@@ -17,6 +17,7 @@ export default abstract class Scrapper {
     const page = await browser.newPage();
 
     await page.goto(this.url);
+    await page.screenshot({ fullPage: true, path: 'page-image-full.png' });
     const data = await page.$$eval(selectorElement, this.parseElements);
 
     if (!data) throw `ERROR: error trying parse ${this.scrapper} DATA`;
