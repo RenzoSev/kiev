@@ -56,21 +56,31 @@ export function parseMinutes(minutes: number) {
 }
 
 export function parseHours(hours: number, minutes: number) {
-  const brTimeAbstract = 12;
-  const hourWithoutAbstract = hours - brTimeAbstract;
-  const hourWithMinuteDiscount =
-    minutes < 0 ? hourWithoutAbstract - 1 : hourWithoutAbstract;
+  const hasMinutesDiscount = minutes < 0;
+  const hoursWithMinutesDiscount = hasMinutesDiscount ? hours - 1 : hours;
 
-  if (hourWithMinuteDiscount > 0) {
+  if (hoursWithMinutesDiscount < 12) {
     return {
-      value: hourWithMinuteDiscount,
-      period: 'PM',
+      value: hoursWithMinutesDiscount,
+      period: 'AM',
     };
   }
 
+  const isATwelvePeriod =
+    hoursWithMinutesDiscount === 12 || hoursWithMinutesDiscount === 24;
+  if (isATwelvePeriod) {
+    return {
+      value: 12,
+      period: hoursWithMinutesDiscount === 12 ? 'PM' : 'AM',
+    };
+  }
+
+  const brTimeAbstract = 12;
+  const hoursWithTimeAbstract = hoursWithMinutesDiscount - brTimeAbstract;
+
   return {
-    value: hourWithMinuteDiscount * -1,
-    period: 'AM',
+    value: hoursWithTimeAbstract,
+    period: 'PM',
   };
 }
 
