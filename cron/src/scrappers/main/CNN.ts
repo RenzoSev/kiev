@@ -20,7 +20,7 @@ export default class CNN extends Scrapper {
       const pageData = await this.getPageData(selectorElement);
       await this.sendPageDataToDB(this.parsePageData(pageData));
 
-      console.log(`Finished ${this.scrapper} Scrapper`);
+      console.log(`Finishing ${this.scrapper} Scrapper`);
     } catch (e) {
       console.error(e);
     }

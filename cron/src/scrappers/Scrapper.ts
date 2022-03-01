@@ -34,8 +34,6 @@ export default abstract class Scrapper {
   public async sendPageDataToDB(pageData: New[]): Promise<void> {
     try {
       const pageDataWithMainNew = this.getHierarchyNew(pageData);
-      console.log('PAGE DATA', pageData);
-      console.log('PAGE DATA WITH MAIN NEW', pageDataWithMainNew);
       await KievNew.insertMany(pageDataWithMainNew);
     } catch (e) {
       console.error();

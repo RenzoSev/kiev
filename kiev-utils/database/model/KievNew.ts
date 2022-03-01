@@ -2,7 +2,7 @@ import { Document, Schema, model } from 'mongoose';
 import Date from '../../types/Date';
 import Hierarchy from '../../types/Hierarchy';
 
-interface KievNew extends Document {
+export interface KievNewDocument extends Document {
   title: string;
   date?: Date;
   srcImage: string;
@@ -19,4 +19,4 @@ const KieNewSchema = new Schema(
   { collection: 'kiev_news' }
 );
 
-export default model<KievNew>('KievNew', KieNewSchema);
+export default model<KievNewDocument>('KievNew', KieNewSchema);
