@@ -2,7 +2,7 @@
 
 import Scrapper from '../Scrapper';
 import { New, NewData } from '../../types/New';
-import { Date, getFullDate, getFullTime } from '../../utils/date';
+import { Date, parseHours } from '../../utils/date';
 
 export default class CNN extends Scrapper {
   constructor() {
@@ -17,7 +17,7 @@ export default class CNN extends Scrapper {
     try {
       console.log(`Starting ${this.scrapper} Scrapper`);
 
-      const selectorElement = '.bastian-page > ._evg > ._evt';
+      const selectorElement = '.home__new > .home__list__item';
       const pageData = await this.getPageData(selectorElement);
       await this.sendPageDataToDB(this.parsePageData(pageData));
 
@@ -31,12 +31,10 @@ export default class CNN extends Scrapper {
     const pageData = [] as NewData[];
 
     for (const element of elements) {
-      const title = element.querySelector('a')?.textContent?.trim();
-      const srcImage = element
-        .querySelector('.bstn-fd-picture-image')
-        ?.getAttribute('src');
+      const title = element.querySelector('h2')?.textContent?.trim();
+      const srcImage = element.querySelector('img')?.getAttribute('src');
       const date = element
-        .querySelector('.feed-post-datetime')
+        .querySelector('.latest__news__infos > .home__title__date')
         ?.textContent?.trim();
 
       if (!title || !srcImage) {
@@ -75,24 +73,16 @@ export default class CNN extends Scrapper {
   }
 
   parseDate(date: string): Date {
-    // TODO: It is possible to a bug happens here with the default full time +
-    // corrected time. Date also needs to be corrected.
+    // example: 01/03/2022 às 12:40
+    const [fullDate, time] = date.split(' às ');
+    const [hours, minutes] = time.split(':');
 
-    const fullDate = getFullDate();
-
-    const isHoursBased = /hora/i.test(date);
-    if (isHoursBased) return { date: fullDate, time: this.parseByHours(date) };
-
-    return { date: fullDate, time: this.parseByMinutes(date) };
-  }
-
-  parseByMinutes(date: string): Date['time'] {
-    const minutes = Number(date.split(' ')[1]);
-    return getFullTime({ m: minutes });
-  }
-
-  parseByHours(date: string): Date['time'] {
-    const hours = Number(date.split(' ')[0]);
-    return getFullTime({ h: hours });
+    return {
+      date: fullDate,
+      time: {
+        hours: parseHours(Number(hours), Number(minutes)),
+        minutes: Number(minutes),
+      },
+    };
   }
 }
