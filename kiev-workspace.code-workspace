@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": "packages/api"
+    },
+    {
+      "path": "packages/cron"
+    },
+    {
+      "path": "packages/kiev-utils"
+    },
+    {
+      "path": "packages/front"
+    }
+  ]
+}
