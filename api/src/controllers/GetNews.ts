@@ -6,7 +6,6 @@ export default class GetNewsController {
     try {
       const getNewsService = new GetNewsService();
       const news = await getNewsService.handle();
-      console.log('NEWS', news);
       return response.json(news).status(200);
     } catch (e) {
       console.error(e);
