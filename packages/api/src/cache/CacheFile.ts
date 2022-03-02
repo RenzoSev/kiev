@@ -8,11 +8,17 @@ export default class CacheFile {
   }
 
   static async getCacheInFile(file: string) {
-    const path = `${__dirname}/${file}`;
-    const data = await fs.readFile(path, 'utf-8');
+    try {
+      const path = `${__dirname}/${file}`;
 
-    const jsonData = JSON.parse(data);
+      await fs.access(path);
+      const data = await fs.readFile(path, 'utf-8');
 
-    return jsonData;
+      const jsonData = JSON.parse(data);
+
+      return jsonData;
+    } catch (e) {
+      return;
+    }
   }
 }

@@ -1,0 +1,14 @@
+{
+  "name": "kiev-utils",
+  "author": "Renzo Sevilha <sevilharenzo@gmail.com>",
+  "version": "1.0.0",
+  "description": "Utils to be used around the projects",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^6.2.4"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  }
+}

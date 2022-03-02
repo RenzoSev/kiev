@@ -20,7 +20,6 @@ export default abstract class Scrapper {
     const page = await browser.newPage();
 
     await page.goto(this.url);
-    await page.screenshot({ fullPage: true, path: 'page-image-full.png' });
     const data = await page.$$eval(selectorElement, this.parseElements);
 
     if (!data) throw `ERROR: error trying parse ${this.scrapper} DATA`;
