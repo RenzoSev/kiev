@@ -13,5 +13,5 @@ export interface NewData {
 }
 
 export interface HierarchyNew extends New {
-  hierarchy: Hierarchy;
+  hierarchy?: Hierarchy;
 }
