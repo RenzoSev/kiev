@@ -38,8 +38,9 @@ export default class Folha extends Scrapper {
       const date = element
         .querySelector('.c-headline__dateline')
         ?.textContent?.trim();
+      const href = element.querySelector('a')?.getAttribute('href');
 
-      if (!title || !srcImage) {
+      if (!title || !srcImage || !href) {
         console.error(
           `There is an parser error with TITLE: ${title}, SRC: ${srcImage}, DATE: ${date}`
         );
@@ -50,6 +51,7 @@ export default class Folha extends Scrapper {
         title,
         srcImage,
         date,
+        href,
       });
     }
 
@@ -61,6 +63,7 @@ export default class Folha extends Scrapper {
       const baseData = {
         title: data.title,
         srcImage: data.srcImage,
+        href: data.href,
       };
 
       if (!data.date) {

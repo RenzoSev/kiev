@@ -35,8 +35,13 @@ export default class CNN extends Scrapper {
       const date = element
         .querySelector('.latest__news__infos > .home__title__date')
         ?.textContent?.trim();
+      const href = element
+        .querySelector('.home__list__tag')
+        ?.getAttribute('href');
 
-      if (!title || !srcImage) {
+      console.log("HREF", href);
+
+      if (!title || !srcImage || !href) {
         console.error(
           `There is an parser error with TITLE: ${title}, SRC: ${srcImage}, DATE: ${date}`
         );
@@ -47,6 +52,7 @@ export default class CNN extends Scrapper {
         title,
         srcImage,
         date,
+        href,
       });
     }
 
@@ -58,6 +64,7 @@ export default class CNN extends Scrapper {
       const baseData = {
         title: data.title,
         srcImage: data.srcImage,
+        href: data.href,
       };
 
       if (!data.date) {

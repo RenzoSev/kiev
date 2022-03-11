@@ -16,7 +16,7 @@ export default abstract class Scrapper {
   }
 
   public async getPageData(selectorElement: string): Promise<NewData[]> {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
     await page.goto(this.url);
