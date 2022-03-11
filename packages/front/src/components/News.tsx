@@ -1,4 +1,5 @@
-import New from './New';
+import MainNew from './MainNew';
+import NormalNew from './NormalNew';
 import { newsAPI } from '../../services/api';
 import { useQuery } from 'react-query';
 
@@ -19,11 +20,17 @@ function News() {
   // TODO: adds loading component:
   if (isLoading) return <span>Is loading</span>;
 
+  console.log(response?.data);
+
   return (
     <section className="flex flex-col items-center py-12 gap-8">
-      {response?.data.map((n, i) => (
-        <New
-          key={`${n.title}${i}`}
+      {response?.data.main.map((n, index) => (
+        <MainNew key={`${n.title}${index}`} {...n} />
+      ))}
+
+      {response?.data.normal.map((n, index) => (
+        <NormalNew
+          key={`${n.title}${index}`}
           title={n.title}
           srcImage={n.srcImage}
           date={n.date}
