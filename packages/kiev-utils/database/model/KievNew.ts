@@ -7,6 +7,7 @@ export interface KievNewDocument extends Document {
   date?: Date;
   srcImage: string;
   hierarchy: Hierarchy;
+  href: string;
 }
 
 const KieNewSchema = new Schema(
@@ -14,6 +15,7 @@ const KieNewSchema = new Schema(
     title: { type: String, required: true },
     srcImage: { type: String, required: true },
     hierarchy: { type: String, require: true },
+    href: { type: String, require: true },
     date: Object,
   },
   { collection: 'kiev_news' }
