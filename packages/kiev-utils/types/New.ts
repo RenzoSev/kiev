@@ -17,3 +17,8 @@ export interface New {
 export interface HierarchyNew extends New {
   hierarchy?: Hierarchy;
 }
+
+export interface NewsByHierarchy {
+  normal: HierarchyNew[];
+  main: HierarchyNew[];
+}
