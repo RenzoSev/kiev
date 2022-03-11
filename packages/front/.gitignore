@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Cache
-packages/api/src/cache/news.json
+news.json
