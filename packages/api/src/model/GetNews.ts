@@ -8,6 +8,8 @@ export default class GetNewsModel {
     const cacheNews = await CacheFile.getCacheInFile(cacheFile);
 
     if (cacheNews) {
+      // TODO: IT WILL NOT SET THE CACHE WITH NEW INFOS. 
+      // SEND PROMISE TO BE RESOLVED INSIDE CACHE FILE.
       CacheFile.setCacheInFile(cacheFile, cacheNews);
       return this.getNewsByHierarchy(cacheNews as HierarchyNew[]);
     }
